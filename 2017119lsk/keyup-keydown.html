@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <!-- //如果按键冲突，可以使用prevent进行阻止 -->
+    <input @keyup.13="submit(1,$event)"type="text"  value="回车提交">
+    <input @keyup.enter="submit(2,$event)"type="text"  value="enter提交">
+    <input @keyup.space="submit(3,$event)"type="text"  value="空格">
+    <input @keyup.esc="submit(4,$event)"type="text"  value="退出">
+    <input @keyup.up="submit(5,$event)"type="text"  value="上">
+    <input @keyup.down="submit(6,$event)"type="text"  value="下">
+    <input @keydown.f1.prevent="submit(7,$event)"type="text"  value="f1">
+    <input @keydown.tab.prevent="submit(7,$event)"type="text"  value="tab">
+    <input @keydown.ctrl.86.prevent="submit(7,$event)"type="text"  placeholder="what are you doing">
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:'#app',
+      methods:{
+        submit(num,event){
+          console.log(event.target.value);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

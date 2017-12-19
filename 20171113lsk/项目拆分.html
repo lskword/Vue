@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <child :lskid="lskid" :url=url></child>
+  </div>
+  <script src="jquery-3.2.1.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var Child = {
+      // data(){
+      //   // return {
+      //   //   url:this.url
+      //   // }
+      // },
+      template: `
+      <ul>
+      <li v-for="item in lskid">
+      <a :href="url+item.carid">
+      <div>{{item.title}}</div>
+      </a>
+      </li>
+      </ul>`,
+      props: ['lskid','url']
+    }
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        url:'http://h6.duchengjiu.top/shop/api_cat.php?cat_id=',
+        lskid: [{
+            carid: 45,
+            title: '家居'
+          },
+          {
+            carid: 55,
+            title: '家具'
+          },
+          {
+            carid: 62,
+            title: '文具'
+          },
+          {
+            carid: 69,
+            title: '数码'
+          },
+          {
+            carid: 77,
+            title: '玩乐'
+          },
+          {
+            carid: 82,
+            title: '厨卫'
+          },
+        ]
+      },
+      components: {
+        Child
+      }
+    })
+  </script>
+</body>
+</html>

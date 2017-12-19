@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+  a{
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background: #ccc;
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
+  }
+  .router-link-active{
+    background: red;
+  }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 使用Vue路由的时候需要引入vue-router.js -->
+    <!-- router-link to='/地址'  相当于给了一个超链接 -->
+    <!-- <a href="#/news">新闻管理</a>
+    <a href="#/shop">商城管理</a> -->
+    <router-link to="/news">新闻管理</router-link>
+    <router-link to="/shop">商城管理</router-link>
+    <!-- //路由显示的模板，规定这样编写 -->
+    <router-view></router-view>
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script src="vue-router.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var NewsComponent = {template:`<div>新闻
+      <router-link to="/news/add">添加新路由</router-link>
+      <router-link to="/news/search">搜索框</router-link>
+      <router-view></router-view>
+      </div>`}
+    var NewAddComponent = {
+      template:`<div><input type="text" /><input type="submit" /></div>`
+    }
+    var NewSearchComponent = {
+      template:`<div>
+        <table>
+          <tr>
+            <th>新闻ID</th>
+            <td>新闻标题</td>
+            <td>操作</td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td>AAA</td>
+            <td><button>删除</button></td>
+          </tr>
+        </table>
+      </div>`
+    }
+    var ShopComponent = {template:`<div>
+      商城
+      <router-link to="/shop/desk">DESK</router-link>
+      <router-link to="/shop/play">SHOP</router-link>
+      <router-view></router-view>
+      </div>`}
+    var NotFoundComponent = {template:`<div>404</div>`}
+    var NewShopComponent = {
+      template:`<div><ul>
+      <li>play1</li>
+      <li>play2</li>
+      <li>play3</li>
+      <li>play4</li>
+      </ul></div>`
+    }
+    var NewDeskComponent = {
+      template:`<div><ul>
+      <li>desk6</li>
+      <li>desk5</li>
+      <li>desk4</li>
+      <li>desk4</li>
+      </ul></div>`
+    }
+    var routes =[
+      { path:"*", component:NotFoundComponent },
+      {
+        path:'/news',
+        component:NewsComponent,
+        children:[
+          // 二级路由有优先级的问题
+          // *号匹配只能放在最后面
+          {path:'',redirect:'add'},
+          {path:'add', component:NewAddComponent },
+          {path:"search",component:NewSearchComponent},
+          {path:'*',component:NotFoundComponent},
+        ]
+       },
+        //component后面不能接''属性，
+        // component 后面不能接s
+        // 直接接属性名
+      { path:'/', redirect:'/news' },
+      // redirect是路由跳转
+      { path:'/shop', component:ShopComponent,
+      children:[
+        {path:"play", component:NewShopComponent},
+        {path:'desk', component:NewDeskComponent }
+        ]
+     }
+    ]
+    let router = new VueRouter({
+      routes
+      //routes相当于 routes:routes
+    })
+    var app = new  Vue({
+      router
+    }).$mount('#app')
+  </script>
+</body>
+</html>

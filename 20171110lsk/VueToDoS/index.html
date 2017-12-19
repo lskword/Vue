@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <section class="todoapp">
+    <header class="header">
+      <h1>地瓜演讲</h1>
+      <input class="new-todo" placeholder="演讲稿" autofocus="" v-model='newtodo' @keyup.enter='addtodo'>
+    </header>
+    <section class="main">
+      <input class="toggle-all" id="toggle-all" type="checkbox" v-model='alldone'>
+      <label for="toggle-all" v-show="showList">Mark all as complete</label>
+      <ul class="todo-list">
+        <li :class="{completed: text.checked,editing:index===editIndex}" v-for="(text,index) in filteredTodoList" :key="'todo-'+index">
+          <div class="view">
+            <input class="toggle" type="checkbox" v-model="text.checked" :key="'checked'+index">
+            <label @dblclick='modtodo(index)'>{{text.title}}</label>
+            <button class="destroy" @click='deltodo(text)'></button>
+          </div>
+          <input class="edit" v-model="text.title" @keyup.enter="saveTodo(text)" v-focus='index===editIndex' @blur='saveTodo(text)'>
+        </li>
+      </ul>
+    </section>
+    <footer class="footer" v-show="showList">
+      <span class="todo-count"><strong>{{activeCount}}</strong> 项目</span>
+      <ul class="filters">
+        <li>
+          <a :class="{selected:visibility==='all'}" href="#/" @click="visibility = 'all'">全部</a>
+        </li>
+        <li>
+          <a href="#/active" :class="{selected:visibility==='active'}" @click="visibility = 'active'">活跃的</a>
+        </li>
+        <li>
+          <a href="#/completed" @click="visibility = 'completed'" :class="{selected:visibility==='completed'}">完成的</a>
+        </li>
+      </ul>
+
+      <button class="clear-completed" @click=delAlltodo v-show='completed'>清除所有完成的</button>
+
+    </footer>
+  </section>
+  <script src="./underscore.js" charset="utf-8"></script>
+  <script src="./vue.js" charset="utf-8"></script>
+  <script src="store.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    // 注册一个全局自定义指令 v-focus
+    Vue.directive('focus', {
+      // 当绑定元素插入到 DOM 中。
+      inserted(el) {
+        // 聚焦元素
+        el.focus()
+      },
+      update(el) {
+        el.focus();
+      }
+    });
+    var filters = {
+      all: function(todos) {
+        return todos;
+      },
+      active: function(todos) {
+        return todos.filter(function(todo) {
+          return !todo.checked;
+        });
+      },
+      completed: function(todos) {
+        return todos.filter(function(todo) {
+          return todo.checked;
+        });
+      }
+    };
+  </script>
+  <script type="text/javascript">
+    // 通过location.hash.substr获取当前状态位于什么
+    var visibility = location.hash.substr(location.hash.indexOf('/')+1);
+    visibility = visibility=== ''? 'all' :visibility;
+    var vm = new Vue({
+      el: ".todoapp",
+      data: {
+        visibility: visibility,
+        AllTodo: false,
+        editIndex: -1,
+        newtodo: '',
+        todomods: false,
+        todolist:
+        // [{
+          // title:内容
+          //checked:false
+        // }]
+         todoStorage.fetch()
+      },
+      watch: {
+        todolist: {
+          deep: true,
+          handler: todoStorage.save
+        },
+        AllTodo: {
+          handler() {
+            this.todolist.map(todo => {
+              todo.checked = this.AllTodo
+            })
+          }
+        }
+
+      },
+      methods: {
+        addtodo() {
+          if (this.newtodo.trim().length < 1) {
+            // this.seen=true;
+            return
+          }
+          this.todolist.unshift({
+            "title": this.newtodo,
+            "checked": false
+          });
+          this.newtodo = '';
+        },
+        //删除指定的元素，通过underscore 里面without(数组，删除的对象)
+        deltodo(text) {
+          this.todolist = _.without(this.todolist, text)
+        },
+        //双击编辑内容
+        modtodo(index) {
+          this.editIndex = index;
+        },
+        saveTodo(text) {
+          this.editIndex = -1;
+          if (text.title.trim().length < 1) {
+            this.deltodo(text)
+          }
+        },
+        delAlltodo() {
+          this.todolist = filters.active(this.todolist);
+        }
+      },
+      computed: {
+        showList() {
+          return this.todolist.length > 0
+        },
+        activeCount() {
+          return filters.active(this.todolist).length
+        },
+        completed(){
+          return filters.completed(this.todolist).length
+        },
+        alldone: {
+          get() {
+            // 每点击一次进行一次选中长度判断，如果等于0那么返回true,
+            // console.log('get');
+            return this.activeCount === 0
+          },
+          set(vaule) {
+            // console.log(vaule);
+            this.todolist.map((todo) => {
+              todo.checked = vaule
+            })
+          }
+        },
+        filteredTodoList: function() {
+          return filters[this.visibility](this.todolist);
+        }
+      }
+
+    })
+  </script>
+
+</body>
+
+</html>

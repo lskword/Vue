@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    我是父组件-----{{ counter }}
+    <button type="button" name="button" @click='changeSize'>点我显示子组件</button>
+    <child v-show='pageSize' :counters='counter' @add='change'></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template: `
+      <div><input type="text" v-model='count' class='addss'/>
+      <input type="button" value='关闭' @click='clear' />
+      <input type="button" value='确定' @click='addSize'/>
+      </div>`,
+      props: ['counters'],
+      data() {
+        return {
+          count: this.counters
+        }
+      },
+      methods: {
+        clear() {
+          // console.log(1);
+          this.$emit('add')
+        },
+        addSize() {
+          console.log(this.count);
+          this.$emit('add', this.count)
+        }
+      }
+    }
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        pageSize: false,
+        counter: '嘿嘿'
+      },
+      methods: {
+        changeSize() {
+          this.pageSize = !this.pageSize
+        },
+        change(item) {
+          this.counter = item
+          this.pageSize = !this.pageSize
+        }
+      },
+      components: {
+        Child
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+      <!-- <div>我是SLOT反派</div> -->
+    <child>
+      <div slot="header">头大</div>
+      插槽为我代言
+      <div slot="footer">脚大</div>
+    </child>
+
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template:`
+      <div>
+        <slot name="header">我是头部</slot>
+        <slot>
+        我为插槽代言
+        </slot>
+        <slot name="footer">我是底部</slot>
+      </div>`
+    }
+    var vm = new  Vue({
+      el:'#app',
+      components:{
+        Child
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <!-- 在这个地方进行传参需要通过props:[]
+    子组件进行接收才能进行传参，并且调用使用 -->
+    <child :message='bit'></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template:
+      `<div>
+      <p v-for='item in message'>
+      <ul>
+          <li>
+          {{item}}
+          </li>
+        </ul>
+      </p>
+      </div>`,
+      // 在这里接收上面模板传下来的参数,
+      // props 只能存在子组件里面使用
+      props:['message']
+    }
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        bit:{
+          name:'lsk',
+          age:18,
+          sex:'男'
+        }
+      },
+      components:{
+        Child
+      }
+    })
+  </script>
+</body>
+</html>

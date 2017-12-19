@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+      <button @click="count++">+1</button>
+      <button @click="count--">-1</button>
+      点击了{{count}}次
+      <button type="button" @click="addcount" name="button">add(3)</button>
+      <button type="button" @click="add(5,$event)" name="button">add(5)</button>
+      <div @click="doing">
+        父元素
+        <a @click.stop="doThis">阻止冒泡</a>
+      </div>
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        count:1
+      },
+      methods:{
+        addcount(){
+          this.count+=3
+          console.log(event.target.tagName);
+        },
+        doing(){console.log('父div doing');},
+        doThis(){console.log('阻止冒泡');},
+        doSubmit(){console.log('阻止默认行为');},
+        add(num,event){
+          this.count+=num;
+          console.log(event.target.tagName);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

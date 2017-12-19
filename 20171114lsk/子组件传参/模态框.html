@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style media="screen">
+    div{
+      width: 100px;
+      height: 100px;
+      border: 1px solid red;
+      position: relative;
+    }
+    .child{
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 300px;
+      height: 300px;
+    }
+    button{
+      float: right;
+    }
+  </style>
+  <!-- 通过子组件触发this.$emit('自定事件名'),触发父组件里面的内容 -->
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <!-- 不能在根组件上面进行写入任何指令 -->
+    <!-- 如果需要触发事件需要从新创建一个元素去接受他 -->
+    <div  @click='change'>
+    </div>
+    <child :norb="norb" @change-down='dso' class='child' ></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template:`<div v-show='norb'>{{n}}
+      <button @click="down" >x</button></div>`,
+      data(){
+        return{
+          n:'显示'
+        }
+      },
+      props:['norb'],
+      methods:{
+          down(){
+            this.$emit("change-down")
+          }
+      }
+    }
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        norb:false
+      },
+      components:{
+        Child
+      },
+      methods:{
+        change(){
+          this.norb=true;
+        },
+        dso(){
+          console.log(1);
+          this.norb=false;
+          // this.norb=false;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2></h2>
+  <script type="text/javascript">
+    var oH2 = document.querySelector("h2");
+    var obj = {};
+    var initValue = 'lskwordserver';
+    Object.defineProperty(obj,'title',{
+      get(){
+        return initValue
+      },
+      set(newValue){
+        initValue = newValue;
+        oH2.innerText = newValue
+      }
+    })
+    console.log(obj.title);
+    obj.title = 'lsk'
+  </script>
+</body>
+</html>

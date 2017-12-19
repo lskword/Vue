@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <!-- :属性= 内容    动态绑定 -->
+    <child message="hello" :my-message='parentMessage'></child>
+    <child message="hi"></child>
+    <input type="text" v-model='parentMessage'/>
+  </div>
+  <script type="text/javascript">
+    var  Child = {
+      template:`<span>{{message}}{{myMessage}}</span>`,
+      // 如果需要传参   需要条用子组件的属性propos:['传参名字']
+      props:['message','myMessage']
+    }
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        parentMessage:'heihei'
+      },
+      components:{
+        Child
+      }
+    })
+  </script>
+</body>
+</html>

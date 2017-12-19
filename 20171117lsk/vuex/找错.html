@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.3.0/vue.js"></script>
+
+</head>
+
+<body>
+  <template id="aa" @aaa='showChild'>
+    <div>
+        <hr>
+       我是子组件2
+        <input type="text" v-model="text2">
+        <button @click="close" >关闭</button>
+        <button @click="affirm()">确认</button>
+    </div>
+</template>
+
+
+  <div id="box">
+    <p>
+      我是父组件:{{text}}
+      <button @click="showChild()">显示子组件</button>
+    </p>
+
+    <child-page v-show="pageSwitch" :pageSwitch2="pageSwitch"  :text2="text"></child-page>
+  </div>
+  <script>
+    new Vue({
+      el: "#box",
+      data: {
+        text: "hello",
+        pageSwitch: false
+      },
+      methods: {
+        showChild: function() {
+          console.log(2);
+          this.pageSwitch = !this.pageSwitch;
+        }
+      },
+      components: {
+        "child-page": {
+          template: "#aa",
+          data: function() {
+            return {
+              childmsg: "子组件信息"
+            }
+          },
+          props: ['pageSwitch2', "text2"],
+          methods: {
+            close: function() {
+              // console.log(this.pageSwitch2);
+              console.log(this.text2);
+              this.$emit('aaa')
+            },
+            affirm: function() {
+              console.log(this.pageSwitch2);
+              console.log(this.text2);
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./vue.js" charset="utf-8"></script>
+  <input v-model='message' type="text">
+  <!-- view -->
+  <!-- 视图层 -->
+  <button v-on:click=reverseMessage>
+    旋转message
+  </button>
+  <div id="app">
+    <!-- v-if 如果属性值true 添加到桌面 flase 删除桌面 -->
+    <p v-if="seen">你看不到我,我被删除了</p>
+    <!-- v-show 如果属性值位true 那么display:block -->
+    <!-- v-show 如果属性值位false 那么display:none -->
+    <p v-show="edn">我是显示，和隐藏</p>
+    <span v-bind:title=message>
+      提示信息
+    </span>
+    {{message}}
+    <ul>
+      <li v-for="item in list">
+        {{item.title}}
+      </li>
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+
+    // Model
+    // 数据层
+    let data = {
+      message:"hello",
+      seen:true,
+      edn:true,
+      list:[
+        {"title":'html'},
+        {"title":'css'},
+        {"title":'js'},
+        {"title":'json'}
+      ]
+    }
+    // ViewModel
+    //连接层
+    let app = new Vue({
+      el:"#app",
+      data,
+      methods:{
+        reverseMessage(){
+          //this代表整个app
+          this.message = this.message.split("").reverse().join("")
+        }
+      }
+
+    })
+    //响应式编程，当我们修改数据的时候，页面自动跟着改变
+    app.message = 'hello vue';
+    console.log(data);
+  </script>
+</body>
+</html>

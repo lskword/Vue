@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./vue.js" charset="utf-8"></script>
+  <div id="app">
+    {{message}}
+    <button v-on:click='reverse'>旋转</button>
+  </div>
+  <script type="text/javascript">
+    let data = {
+      message: "hi"
+    };
+    const app = new Vue({
+      //选项
+      el: "#app",
+      data,
+      methods: {
+        reverse() {
+          console.log(1);
+          this.message = this.message.split('').reverse().join('')
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

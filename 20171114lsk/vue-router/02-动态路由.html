@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <router-link to="/user/foo">foo</router-link>
+    <router-link to="/user/bar">bar</router-link>
+    <router-view></router-view>
+  </div>
+<script src="./node_modules/vue/dist/vue.js" charset="utf-8"></script>
+<script src="./node_modules/vue-router/dist/vue-router.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    // 有三个route区别
+    // {routes  属于VueRouter路由属性 
+    //  $route  获取地址栏的类容
+    //  router自己声明的
+    // }
+    const User = {template:`<div>user{{ $route.params.id}}</div>`}
+    const router = new VueRouter({
+      routes:[
+        {
+          path:'/user/:id',
+          component:User
+        }
+      ]
+    })
+    const app = new Vue({
+      router
+    }).$mount("#app")
+  </script>
+</body>
+</html>

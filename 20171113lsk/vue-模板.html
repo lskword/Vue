@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <child></child>
+    <child></child>
+    <child></child>
+    <child></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template:`<div></div>`,
+      // 在子组件里面的data只能是一个函数并且return { 'name' : lsk}返回一对象
+      data(){
+        return {}
+      },
+      props:[],
+      componenst:{}
+    }
+    var vm = new Vue({
+      el:"#app",
+      data:{
+
+      },
+      // 计算属性
+      computed:{
+
+      },
+      // 组件包括什么
+      components:{
+        Child
+      },
+      // 运行方法
+      methods:{
+
+      },
+      //自定义属性
+      drectives:{
+
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app" >
+    <child :datas=d></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template:
+      `<ul><li v-for="msg in datas">{{msg}}</li></ul>`,
+      props:['datas']
+    }
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        d:[
+        1,23,4,5,6,7
+      ]
+    },
+      components:{
+        Child
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="app">
+    <input @keydown.enter='AddList($event)' type="text" name="" v-model='vuale' placeholder="what are you doing?">
+    <child :todolist='TodoList' @deltodolist='DelTodoList'></child>
+    <p>
+      <span>{{ tdlength }}</span>
+      <div>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+      <span></span>
+    </p>
+  </div>
+  <script src="./vue.js" charset="utf-8"></script>
+  <script src="./underscore.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var Child = {
+      template:`
+      <ul>
+        <li v-for='(item, index) in todolist':key='index'>
+        <input type="checkbox" v-model='item.checked'/>
+        {{item.name}}
+        <button @click='deltodolist(item)'>删除</button>
+        </li>
+      </ul>`,
+      props:['todolist'],
+      methods: {
+        deltodolist (item) {
+          this.$emit('deltodolist', item)
+        }
+      }
+    }
+    var vm = new Vue({
+      el:'.app',
+      data:{
+        vuale:'',
+        TodoList:[],
+        tdlength:''
+      },
+      methods:{
+        AddList(event) {
+            this.TodoList.unshift({
+              'name': event.target.value,
+              'checked': false
+            })
+        },
+        DelTodoList (item) {
+          // console.log(this.TodoList.length);
+          console.log(this.tdlength)
+          this.TodoList = _.without(this.TodoList, item)
+        }
+      },
+      components:{
+        Child
+      }
+    })
+  </script>
+</body>
+</html>

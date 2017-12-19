@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <!-- //此案例展现的是如何通过子组件改变父组件的内容 -->
+  <div id="app">
+    {{ total }}
+            <!-- 自定义事件名 = 触发的方法 -->
+    <child @add-parent-total="addTotal"></child>
+    <child @add-parent-total="addTotal"></child>
+    <child @add-parent-total="addTotal"></child>
+    <child></child>
+    <child></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template:`
+      <button @click="addCounter">
+      {{ counter }}
+      </button>`,
+      data(){
+        return {
+          counter: 0
+        }
+      },
+      props:[],
+      methods:{
+        addCounter() {
+          this.counter++;
+          // this.$emit("自定义事件名")  要触发自定义事件需要调用$emit()
+          this.$emit("add-parent-total")
+        }
+      }
+    }
+    var vm = new  Vue({
+      el:"#app",
+      data:{
+        total:0
+      },
+      components:{
+        Child
+      },
+      methods: {
+        // 自定义绑定事件的方法
+        addTotal() {
+          this.total++
+        }
+      }
+    })
+  </script>
+</body>
+</html>

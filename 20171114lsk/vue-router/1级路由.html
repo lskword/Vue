@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+  .router-link-active{
+    background: red;
+  }
+
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 使用Vue路由的时候需要引入vue-router.js -->
+    <!-- router-link to='/地址'  相当于给了一个超链接 -->
+    <!-- <a href="#/news">新闻管理</a>
+    <a href="#/shop">商城管理</a> -->
+    <router-link to="/news">新闻管理</router-link>
+    <router-link to="/shop">商城管理</router-link>
+    <!-- //路由显示的模板，规定这样编写 -->
+    <router-view></router-view>
+  </div>
+  <script src="./node_modules/vue/dist/vue.js" charset="utf-8"></script>
+  <script src="./node_modules/vue-router/dist/vue-router.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var NewsComponent = {template:`<div>新闻</div>`}
+    var ShopComponent = {template:`<div>商城</div>`}
+    var NotFoundComponent = {template:`<div>404</div>`}
+    var routes =[
+      {
+        path:"*",
+        component:NotFoundComponent
+      },
+      {
+        path:'/news',
+        //component后面不能接''属性，
+        // component 后面不能接s
+        // 直接接属性名
+        component:NewsComponent
+      },
+      {
+        path:'/',
+        // redirect是路由跳转
+        redirect:'/news'
+      },
+      {
+        path:'/shop',
+        component:ShopComponent
+      }
+
+    ]
+    let router = new VueRouter({
+      routes
+      //routes相当于 routes:routes
+    })
+    var app = new  Vue({
+      router
+    }).$mount('#app')
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <div @click.stop.prevnet='doThat'>
+      阻止默认行为和冒泡
+    </div>
+    <div @click.capture='doThis'>
+      事件破获模式
+    </div>
+    <div @click.self='doThat'>
+      自身<div>子元素</div>
+
+    </div>
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:"#app",
+      
+      methods:{
+        doing(){
+          console.log('doing');
+        },
+        doThis(){
+          console.log('doThis');
+        },
+        doThat(){
+          console.log('doThat');
+        }
+      }
+    })
+  </script>
+</body>
+</html>

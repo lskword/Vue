@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style media="screen">
+    .header{
+      width: 100%;
+      line-height: 30px;
+
+    }
+    .header li{
+      float: left;
+      border:1px solid red;
+      margin: 21px;
+    }
+    .goodslist{
+      width: 500px;
+      /*height: 500px;*/
+      float: left;
+    }
+    img{
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- :to动态添加超链接 -->
+    <!-- :key只是用一次 -->
+    <!-- tag='标签'  数据目标生成标签内容 -->
+    <ul class='header'>
+    <router-link
+    v-for="(cat,index) in cats"
+    :to="'/cat/'+cat.cat_id"
+    :key="'cat'+index"
+    tag='li'>
+    {{cat.cat_name}}
+  </router-link>
+  </ul>
+    <router-view></router-view>
+  </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script src="vue-router.js" charset="utf-8"></script>
+    <script src="./node_modules/axios/dist/axios.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var User = {
+        template:`<div>
+        <div id="bo">
+        <ul>
+        <li v-for='goods in this.goods' class='goodslist'>
+          {{goods.goods_name}}
+          {{goods.goods_number}}
+          {{goods.price}}
+          <img :src=goods.goods_thumb :title='goods.goods_name'/>
+        </li></ul></div>
+        </div>`,
+        //监听路由
+        watch:{
+          $route(to, from){
+            axios.get('http://h6.duchengjiu.top/shop/api_goods.php?cat_id='+to.params.id).then(res=>{
+              // console.log(res);
+              this.goods=res.data.data
+              console.log(this.goods);
+            })
+          }
+        },
+        data(){
+          return {
+            goods:[]
+          }
+        }
+
+      }
+      var router = new VueRouter({
+        routes:[
+          {
+            path:'/cat/:id',
+            component:User
+          }
+        ]
+      })
+      var app = new Vue({
+        el:"#app",
+        router,
+        data:{
+          cats:[]
+        },
+        created(){
+          axios
+              .get('http://h6.duchengjiu.top/shop/api_cat.php')
+              .then(res =>{
+            // console.log(res.data.data);
+            this.cats = res.data.data;
+          })
+        }
+      })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style media="screen">
+    [v-clock]{
+      display: none !important;
+      /*//提审权重  只在未编辑的时候启动*/
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <script src="./node_modules/vue/dist/vue.js" charset="utf-8"></script>
+  <script src="./node_modules/underscore/underscore.js" charset="utf-8"></script>
+  <div class="app" v-cloak @click=AddNew>
+    <!-- v-cloak
+    功能是让页面还没加载完成的时候，
+    或者还没有编辑的时候让他先隐藏 -->
+    {{msg}}
+
+  </div>
+  <script type="text/javascript">
+      var vm = new Vue({
+        el:".app",
+        data:{
+          msg:'我是V-CLOAK详解'
+        },
+        methods:{
+          AddNew(){
+            document.write(`
+              <h1>
+                哈哈
+              </h1>
+              `)
+          }
+        },
+        computed:{
+
+        },
+        directives:{
+
+        }
+      })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./vue.js" charset="utf-8"></script>
+  <div id="app">
+    <my-li></my-li>
+    <my-li></my-li>
+    <my-li></my-li>
+    <my-li></my-li>
+  </div>
+  <script type="text/javascript">
+
+    var MyLi = {
+      //子组件里面的data必须是一个含数，
+      //并且不能单独声明在引用，每一个组件都必须获取自己的一个counter
+      //并且子组件里面的data 返回出来的东西也必须是对象 才能分配每一个子组件
+      data(){
+        return {
+          counter:0
+        }
+      },
+      template:`<button @click="counter++">{{counter}}</button>`
+    }
+    var vm = new Vue({
+      el:"#app",
+      data:{
+        msg:""
+      },
+      components:{
+        MyLi
+      }
+    })
+  </script>
+</body>
+</html>

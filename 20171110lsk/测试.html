@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./node_modules/todomvc-app-css/index.css">
+</head>
+<body>
+<section class="todoapp">
+    <header class="header">
+        <h1>todos</h1>
+        <input class="new-todo" placeholder="What needs to be done?" autofocus="" v-model="newTodo" @keyup.enter.trim="addTodo()"/>
+    </header>
+    <section class="main">
+        <input class="toggle-all" id="toggle-all" type="checkbox" />
+        <label for="toggle-all">Mark all as complete</label>
+        <ul class="todo-list">
+            <li :class="{completed:todo.checked}" v-for="(todo,index) in todoList" :key="'todo-'+index">
+                <div class="view">
+                    <input class="toggle" type="checkbox" v-model="todo.checked"/>
+                    <label>{{todo.text}}</label>
+                    <button class="destroy"></button>
+                </div> <input class="edit" value="2" /> </li>
+        </ul>
+    </section>
+    <footer class="footer">
+        <span class="todo-count"><strong>0</strong> items left</span>
+        <ul class="filters">
+            <li> <a class="selected" href="#/">所有</a> </li>
+            <li> <a href="#/active">未完成</a> </li>
+            <li> <a href="#/completed">已完成</a> </li>
+        </ul>
+        <button class="clear-completed">Clear completed</button>
+    </footer>
+</section>
+</body>
+</html>
+<script src="./node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript">
+    var todoapp=new Vue({
+        el:'.todoapp',
+        data:{
+            newTodo:'',
+            todoList:[
+                {
+                    text: '学Vue',
+                    checked: true
+                },
+                {
+                    text:'学React',
+                    checked:false
+                }
+            ]
+        },
+        methods:{
+            addTodo(){
+                this.newTodo=this.newTodo.trim();
+                if(this.newTodo.length<1){
+                    return;
+                }
+                this.todoList.unshift({
+                    text:this.newTodo,
+                    checked:false
+                });
+                this.newTodo='';
+            }
+        },
+        computed:{
+
+        }
+    })
+</script>

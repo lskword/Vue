@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div class="app">
+    {{message}}
+    <!-- 标签插入 -->
+    <div v-html='h'></div>
+    <!-- 属性插值 -->
+    <div v-bind:id="msg">属性</div>
+    <!-- 添加删除布尔类型属性 -->
+    <button v-bind:disabled="isDisabled">按钮</button> {{number + 1}} {{ok ? msg : 'no'}} {{message.split("").reverse().join("") }}
+    <div v-bind:id="'list_'+id">字符串和值拼接</div>
+    <p v-if="seen">显示</p>
+    <a v-bind:href="url">百度</a>
+    <a v-on:click="doSomething">点击</a>
+    <!-- prevent相当于自动帮我们写了一个event.preventDefault() -->
+    <form v-on:submit.prevent='onSubmit'>
+      <input type="submit" name="" value="提交">
+    </form>
+    <!-- 属性绑定缩写 -->
+    <a :href="url">百度</a>
+    <!-- 事件绑定的缩写 -->
+    <a @click='doSomething'>点击</a>
+  </div>
+  <script type="text/javascript">
+    var vm = new Vue({
+      // 挂载DOM
+      el: '.app',
+      //存数据
+      data: {
+        message: 'hi',
+        h: "<h1>hello</h1>",
+        msg: "r123",
+        number: 1,
+        isDisabled: true,
+        ok: 'true',
+        id: 4,
+        seen: 'true',
+        url: 'http://www.baidu.com'
+      },
+      //存方法
+      methods: {
+        doSomething() {
+          console.log('do dosomething');
+        },
+        onSubmit() {
+          console.log('我是submit');
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

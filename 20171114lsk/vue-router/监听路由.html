@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <router-link to="/user/foo">/user/foo</router-link>
+
+    <router-link to="/user/bar">/user/bar</router-link>
+    <router-view></router-view>
+  </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script src="vue-router.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var User = {
+        template:`<div>User{{ $route.params.id }}</div>`,
+        //监听路由
+        watch:{
+          $route(to, from){
+            console.log(to.params.id);
+            // console.log(to,from);
+          }
+        }
+
+      }
+      var router = new VueRouter({
+        routes:[
+          {
+            path:'/user/:id',
+            component:User
+          }
+        ]
+      })
+      var app = new Vue({
+        el:"#app",
+        router
+      })
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <child :initcounter=initcounter></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template: `
+      <div @click = "newcunter++">
+      {{initcounter}}
+      {{newcunter}}
+      </div>`,
+      props: ['initcounter'],
+      // 修改传递过来的数值的同时必须要将data数据进行数值储存返回
+      // 不然直接修改系统会提示错误
+      // 每一个父组件传值过来的时候，子组件的每一个属性值都是独有的，
+      // 只需要单独储存就可以了
+      data() {
+        return {
+          newcunter: this.initcounter
+        }
+      }
+    }
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        initcounter: 0
+      },
+      components: {
+        Child
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    杯子：<input type="number" v-model=priceA min=0 /> 数量：
+    <input type="number" v-model=numberA min=0> 小计:{{sumA}} 女票：
+    <input type="number" v-model=priceB min=0> 数量：
+    <input type="number" v-model=numberB min=0> 小计:{{sumB}} 总计:{{sumA + sumB}}
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        priceA: 150,
+        numberA: 3,
+        priceB: 100,
+        numberB: 2,
+      },
+      methods,
+      // 计算属性。
+      computed: {
+        sumA() {
+          return this.priceA * this.numberA
+        },
+        sumB() {
+          return this.priceB * this.numberB
+        }
+        // sum(){
+        //   return  this.sumB+this.sumA
+        // }
+      }
+
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    .even{
+      color: red;
+    }
+    .odd{
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p :class='eoro'>{{ counter }}</p>
+    <button @click="add">+</button>
+    <button @click='del'>-</button>
+  </div>
+  <script src="../vue.js" charset="utf-8"></script>
+  <script src="vuex.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    const store = new Vuex.Store({
+      //有哪些状态
+      // 在这里的state就跟data一样是固定的词不能改变
+      state: {
+        count: 0
+      },
+      getters: {
+        eoro: state=>{
+          return state.count % 2 === 0 ? 'even' : "odd"
+        }
+      },
+      actions: {
+        incrementAction(store, amount) {
+          store.commit('increment', amount)
+        },
+        delsum({ commit }) {
+          commit('initdelsum')
+        }
+      },
+      //改变，通过调用这个方法来修改state的值
+      mutations: {
+        increment(state, amount) {
+          //这里面的方法的第一个state,我们可以直接修改
+          state.count +=amount
+        },
+        initdelsum (state) {
+          state.count--
+        }
+        }
+    })
+    var app = new Vue({
+      el: '#app',
+      computed: {
+        counter() {
+          return store.state.count
+        },
+        eoro() {
+          return store.getters.eoro
+        }
+      },
+      methods: {
+        add() {
+          // 使用store里面的dispatch触发store.actions.incrementAction方法
+          store.dispatch('incrementAction', 5)
+        },
+        del() {
+          store.dispatch('delsum')
+        }
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>

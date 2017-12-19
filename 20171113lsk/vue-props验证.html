@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="vue.js" charset="utf-8"></script>
+  <div id="app">
+    <child :pa=pa :pb=pb :pc=pc :pd=pd :pe=pe></child>
+  </div>
+  <script type="text/javascript">
+    var Child = {
+      template: `<div>{{pa}} {{pb}} {{pc}} {{pd}} {{pe}}</div>`,
+      props: {
+        pa: Number,
+        pb: [Number, String],
+        // 属性拦截
+        pc: {
+          type: Number,
+          // 必填的属性  如果为false 则不是必填
+          require: true
+        },
+        pd: {
+          type: Number,
+          // 给pd值添加属性就使用default
+          //子属性的值是由父元素的肯定
+          // 如果要改需要从新保存父组件的值，
+          //从新返回
+          default: 100
+        },
+        pe:{
+          type :Object,
+          default(){
+            return {
+              'name':"ls"
+            }
+          }
+        }
+      }
+    }
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        pa: 22,
+        pb: 'dsfsd',
+        pc: 22,
+        pd: 30,
+        pe:{}
+      },
+      components: {
+        Child
+      }
+    })
+  </script>
+</body>
+
+</html>

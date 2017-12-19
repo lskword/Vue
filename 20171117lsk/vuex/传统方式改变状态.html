@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../vue.js" charset="utf-8"></script>
+  <div id="app">
+    <button type="button" name="button" @click=add>+</button>
+  <div>{{count}}</div>
+</div>
+  <script type="text/javascript">
+    new Vue({
+      el:"#app",
+      data:{
+        count:0
+      },
+      methods:{
+        add() {
+          this.count++
+        }
+      }
+    })
+  </script>
+</body>
+</html>

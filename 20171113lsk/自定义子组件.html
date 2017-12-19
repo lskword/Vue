@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./vue.js" charset="utf-8"></script>
+  <div id="app">
+    <child></child>
+    <son1></son1>
+  </div>
+  <script type="text/javascript">
+    var son1s = {
+      template:"<p>hehe</p>"
+    }
+    var son1 = {
+      template:"<div>son1</div>",
+      components:{
+        son1s
+      }
+    }
+    var Son = {
+      template:"<div>son</div>"
+    }
+    var Child = {
+      template:"<div>child <Son></Son> <son></son> </div>",
+      components:{
+        Son
+      }
+    }
+    var vm = new Vue({
+      el:'#app',
+      components:{
+        Child,
+        son1
+      }
+    })
+
+  </script>
+</body>
+
+</html>
